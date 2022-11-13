@@ -56,7 +56,7 @@ import torchvision
 from torch.utils.tensorboard import SummaryWriter
 writer = SummaryWriter()
 
-data_path = "/tdata1/jaden/048_Indoor_3D_Data/01_Data/indoor_objects2"
+data_path = "" # Your Data Path
 print(data_path)
 classes = os.listdir(data_path)
 print(classes)
@@ -65,7 +65,7 @@ class MeshDataset(data.Dataset):
     def __init__(self, root, npoints=1024, classification=True):
         self.npoints = npoints
         self.root = root
-        self.catfile = "/tdata1/jaden/048_Indoor_3D_Data/01_Data/indoor_objects2"
+        self.catfile = "" # Your Data Path
         self.cat = {}
 
         self.classification = classification
@@ -166,7 +166,7 @@ class PcdDataset(data.Dataset):
     def __init__(self, root, npoints = 1024, classification = True, state = 0):
         self.root = root
         self.npoints = npoints
-        self.catfile = "/tdata1/jaden/048_Indoor_3D_Data/01_Data/indoor_objects2"
+        self.catfile = "" # Your Data Path
         self.cat = {}
 
         self.classification = classification
@@ -252,7 +252,7 @@ print('Current cuda device:', torch.cuda.current_device())
 
 _classifier = PointNetCls(k=len(classes))
 classifier = nn.DataParallel(_classifier).to(device)
-classifier.load_state_dict(torch.load('/tdata1/jaden/048_Indoor_3D_Data/01_Data/code/20221101/mesh/batch32/best_mesh_cls_model_192.pth'))
+classifier.load_state_dict(torch.load('')) # Your Path
 
 print('Device:', device)  # 출력결과: cuda
 # 출력결과: 2 (2, 3 두개 사용하므로)
@@ -338,9 +338,9 @@ for epoch in range(max_epochs):
         torch.save(
             classifier.state_dict(),
             os.path.join(
-                "/tdata1/jaden/048_Indoor_3D_Data/01_Data/code/20221101/mesh/batch32", "fine_tune_mesh_cls_model_%d.pth" % (epoch)
+                "", "fine_tune_mesh_cls_model_%d.pth" % (epoch) 
             ),
-        )
+        ) # Your Path
 
     epoch_loss /= step
     epoch_loss_values.append(epoch_loss)
@@ -355,18 +355,18 @@ for epoch in range(max_epochs):
         torch.save(
             classifier.state_dict(),
             os.path.join(
-                "/tdata1/jaden/048_Indoor_3D_Data/01_Data/code/20221101/mesh/batch32",
+                "",
                 "fine_tune_best_mesh_cls_model_%d.pth" % (best_metric_epoch),
             ),
-        )
+        )# Your Path
 
 torch.save(
             classifier.state_dict(),
             os.path.join(
-                "/tdata1/jaden/048_Indoor_3D_Data/01_Data/code/20221101/mesh/batch32",
+                "",
                 "fine_tune_mesh_cls_model_%d.pth" % (max_epochs),
             ),
-        )
+        )# Your Path
 
 writer.flush()
 writer.close()
